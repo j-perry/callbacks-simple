@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Callbacks</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+    </head>
+    <body onload="log()">
+        <h1>Output</h1>
+        <div id="log-container" />
+    </body>
+    <script>
+        function doSomething() {
+            return {
+                then: function(callback) {
+                    var value = 42;
+                    callback(value);
+                }
+            };
+        }
+
+        function log(varargs) {
+            var args = Array.prototype.slice.call(arguments, 0);
+            var message = args.join(" ");
+            var container = document.getElementById('log-container');
+            var messageDiv = document.createElement('div');
+            messageDiv.innerHTML = message;
+            container.appendChild(messageDiv);
+        }
+
+        doSomething().then(function(result) {
+            log("Error");
+        });
+        // promises can also return a rejected state, although 
+        // vanilla JS doesn't support .catch() just quite yet...
+        //
+        // .catch(function(err) {
+        //      log(err);   
+        // });
+    </script>
+</html>
